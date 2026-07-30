@@ -20,6 +20,10 @@ function ProtectedRoute({isAuthenticated, user, children}) {
             return <Navigate to={"/admin/dashboard"}/>
         }
 
+        if(user?.role === "SELLER"){
+            return <Navigate to={"/seller/dashboard"}/>
+        }
+
         return <Navigate to={"/shop/home"}/>    
     }
 
@@ -29,8 +33,10 @@ function ProtectedRoute({isAuthenticated, user, children}) {
 
     if(isAuthenticated && (loc.pathname.includes("/login") || loc.pathname.includes("/register"))){
 
-        if(user?.role == "ADMIN") return <Navigate to={"/admin/dashboard"}/>
+        if(user?.role === "ADMIN") return <Navigate to={"/admin/dashboard"}/>
         
+        if(user?.role === "SELLER") return <Navigate to={"/seller/dashboard"}/>
+
         return <Navigate to={"/shop/home"}/>
     }
 
@@ -38,8 +44,16 @@ function ProtectedRoute({isAuthenticated, user, children}) {
         return <Navigate to={"/unauth-page"}/>
     }
 
+    if(isAuthenticated && user.role != "SELLER" && loc.pathname.includes("seller")){
+        return <Navigate to={"/unauth-page"}/>
+    }
+
     if(isAuthenticated && user.role === "ADMIN" && loc.pathname.includes("shop")){
         return <Navigate to={"/admin/dashboard"}/>
+    }
+
+    if(isAuthenticated && user.role === "SELLER" && loc.pathname.includes("shop")){
+        return <Navigate to={"/seller/dashboard"}/>
     }
 
     return <>{children}</>
