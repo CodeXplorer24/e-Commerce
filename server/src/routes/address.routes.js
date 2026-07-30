@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { verifyJWT } from "../middleware/auth.middleware.js";
-import { addAddress, deleteAddress, getAddress, getAddressbyId, getAllAddresses, updateAddress } from "../controllers/address.controller.js";
+import { addAddress, deleteAddress, getAddressbyId, getAllAddresses, updateAddress } from "../controllers/address.controller.js";
 
 const router = Router();
 

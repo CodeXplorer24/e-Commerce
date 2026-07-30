@@ -82,12 +82,8 @@ const loginUser = asyncHandler(async(req,res) => {
               .cookie("refreshToken", refreshToken, options)
               .json(new ApiResponse(
                 200,
-                {
-                    userData : loggedInUser,
-                    accessToken,
-                    refreshToken
-                },
-                "user logged in succesfully"
+                loggedInUser,
+                "User logged in succesfully"
               ));
 })
 
@@ -116,12 +112,12 @@ const logoutUser = asyncHandler(async(req,res) => {
               .json(new ApiResponse(
                 200,
                 {},
-                `${req.user.fullName} logged out successfully`
+                `Logged out successfully`
               ))
 
 })
 
-const refreshAccessToken = asyncHandler(async(req,res) => {
+const refreshSession = asyncHandler(async(req,res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
 
     if(!incomingRefreshToken){
@@ -155,7 +151,7 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
     await user.save({validateBeforeSave: false});
 
     const options = {
-        httpOnly: true,
+        httpOnly: true, //Not accessible via client side script
         secure: true
     }
 
@@ -166,11 +162,8 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
              .json(
                 new ApiResponse(
                     201,
-                    {
-                        accessToken: accessToken,
-                        refreshToken: refreshToken
-                    },
-                    "Access Token refreshed"
+                    {},
+                    "Tokens refreshed"
                 )
             )
 
@@ -178,9 +171,16 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
     
 })
 
+const checkAuth = asyncHandler(async(req, res) => {
+    return res
+            .status(200)
+            .json(new ApiResponse(200, req.user, "User Authenticated Successfully"))
+})
+
 export {
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken
+    refreshSession,
+    checkAuth
 }
