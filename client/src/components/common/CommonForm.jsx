@@ -35,13 +35,15 @@ function CommonForm({
           break;
         case "select":
           element = (
-            <Select>
-                value={value}
-                onValueChange={(event) => setFormData({
-                    ...formData,
-                    [controlItem.name]: event.target.value
-                })
-                }
+            /* FIX 2: Fixed opening tag wrapper and closed it properly */
+            <Select 
+              value={value}
+              /* FIX 3: Extracted raw value string, not event object */
+              onValueChange={(value) => setFormData({
+                  ...formData,
+                  [controlItem.name]: value
+              })}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={controlItem.placeholder} />
               </SelectTrigger>
@@ -50,8 +52,7 @@ function CommonForm({
                   ? controlItem.options.map((optionItem) => (
                       <SelectItem key={optionItem.id} value={optionItem.id}>
                         {optionItem.label}
-                      </SelectItem>
-                    ))
+                      </SelectItem> ))
                   : null}
               </SelectContent>
             </Select>
@@ -97,7 +98,7 @@ function CommonForm({
             <div className="flex flex-col gap-3">
                 {
                     formControls.map((controlItem) => 
-                        <div className="grid w-full gap-2">
+                        <div key={controlItem.name} className="grid w-full gap-2">
                             <Label className="mb-1">{controlItem.label}</Label>
                             {
                                 renderInputsByComponentType(controlItem)
