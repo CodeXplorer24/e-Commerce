@@ -7,7 +7,7 @@ import Register from "./pages/auth/Register.jsx";
 import AdminLayout from "./components/admin/adminLayout.jsx";
 import Dashboard from "./pages/admin/Dashboard.jsx";
 import Features from "./pages/admin/Features.jsx";
-import Products from "./pages/admin/Products.jsx";
+// import Products from "./pages/admin/Products.jsx";
 import Orders from "./pages/admin/Orders.jsx";
 import ShoppingLayout from "./components/shopping/ShoppingLayout.jsx"
 import NotFound from "./pages/error/NotFound.jsx";
@@ -23,6 +23,7 @@ import { checkAuth } from "./features/auth/authThunk.js";
 // import { Skeleton } from "@/components/ui/skeleton"
 import { SpinnerCustom } from "@/components/ui/spinner.jsx"
 import SellerLayout from "./components/seller/SellerLayout";
+import Products from "./pages/seller/Products.jsx"
 
 function App() {
   const {user, isAuthenticated, isLoading} = useSelector((state) => state.auth)
