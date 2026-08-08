@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const productImageSchema = new mongoose.Schema({
     productId: {
@@ -11,5 +12,5 @@ const productImageSchema = new mongoose.Schema({
         required: true
     }
 },{timestamps: true})
-
+productImageSchema.plugin(mongooseAggregatePaginate)
 export const ProductImage = mongoose.model("ProductImage", productImageSchema);
