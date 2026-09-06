@@ -26,6 +26,7 @@ app.use(express.urlencoded({limit: "16kb"})); // express.urlencoded() → parses
 app.use(express.static("public")); // serves static files like image
 app.use(cookieParser()); // parses cookies data
 
+
 import authRouter from "../src/routes/auth.routes.js";
 app.use("/api/v1/auth", authRouter);
 
@@ -35,8 +36,11 @@ app.use("/api/v1/users", userRouter);
 import addressRouter from "../src/routes/address.routes.js";
 app.use("/api/v1/addresses", addressRouter);
 
-// import productRouter from "../src/routes/product.routes.js";
-// app.use("/api/v1/prod")
+import productRouter from "../src/routes/product.routes.js";
+app.use("/api/v1/shop", productRouter);
+
+import cartRouter from "../src/routes/cart.routes.js";
+app.use("/api/v1/cart", cartRouter);
 
 import sellerRouter from "../src/routes/seller.routes.js";
 app.use("/api/v1/seller", sellerRouter);
@@ -45,3 +49,4 @@ import { errorMiddleware } from "./middleware/error.middleware.js";
 app.use(errorMiddleware);
 
 export {app};
+// http://localhost:8000/api/v1/
